@@ -11,22 +11,28 @@ namespace api.Controllers
     {
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(new {
+                soru="Sorunun texti",
+                cevaplar= new string[] { "şık1", "şık2", "şık3" }}
+                );
+                
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
+       /* [HttpGet("{id}")]
         public string Get(int id)
         {
             return "value";
         }
-
+*/
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public IActionResult Post([FromBody]dynamic value)
         {
+            int answer=value.Answer;
+            return Ok(new {your_answer=answer,true_answer=3});
         }
 
         // PUT api/values/5
