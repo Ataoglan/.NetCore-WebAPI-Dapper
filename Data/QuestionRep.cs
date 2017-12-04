@@ -26,11 +26,15 @@ namespace api.Data{
         }
         public List<dynamic> GetQuestion(int id){
             using(IDbConnection _dbConnection = _connection){
-                string query=@"select q.questionText Text,a.answerText1 Ans1,a.answerText2 Ans2, a.answerText3 Ans3 ,a.trueAnswerNumber Cevap  
-                               from question q inner join answer a on q.answerID=a.answerID where q.questionID="+id;
-                var _questionList = _dbConnection.Query(query);
+                string query=@"select q.questionText Text,a.answerText1 Ans1,a.answerText2 Ans2, a.answerText3 Ans3 ,a.trueAnswerNumber Answer  
+                               from question q inner join answer a on q.answerID=a.answerID where q.questionID=@id";
+                var _questionList = _dbConnection.Query(query,new {id=id});
                 return _questionList.ToList();   
             }
+        }
+
+        public int getAnswer(int id){
+            return GetQuestion(id).FirstOrDefault().Answer;
         }
 
     }

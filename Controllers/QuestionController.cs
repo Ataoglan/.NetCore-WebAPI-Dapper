@@ -21,10 +21,20 @@ namespace api.Controllers{
         [HttpGet("{id}")]
         public IActionResult GetQuestion(int id){
             var question = _rep.GetQuestion(id);
-            if(question==null){
-                return NotFound();
+            if(!question.Any()){ //hiç elemanı var mı onu kontrol ediyor
+                return BadRequest();
             }
             return Ok(question);
         }
+
+        [HttpPost]
+        public IActionResult Post([FromBody]dynamic value)
+        {
+            int answer=value.Answer;
+            int id=value.id; //sorunun ID'si
+            int true_answer = _rep.getAnswer(id);
+            return Ok(new {your_answer=answer,dogru_cevap=true_answer,id=id});
+        }
+
     }
 }
