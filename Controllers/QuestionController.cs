@@ -22,7 +22,7 @@ namespace api.Controllers{
         [HttpGet("{id}")]
         public IActionResult GetQuestion(int id){
             var question = _rep.GetQuestion(id);
-            if(!question.Any()){ //hiç elemanı var mı onu kontrol ediyor
+            if(question.Equals(null)){ 
                 return BadRequest();
             }
             return Ok(question);

@@ -15,10 +15,10 @@ namespace api.Controllers{
 
        [HttpGet("{id}")]
         public IActionResult GetSolution(int id){
-            var solution = _rep.GetQuestion(id);
-            if(!solution.Any()){ //hiç elemanı var mı onu kontrol ediyor
-                return BadRequest();
-            }
+            var solution = _rep.GetSolution(id);
+            // if(!solution.Any()){ //hiç elemanı var mı onu kontrol ediyor
+            //     return BadRequest();
+            // }
             return Ok(solution);
         }
     }
