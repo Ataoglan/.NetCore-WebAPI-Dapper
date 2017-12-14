@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using api.Data;
+using api.Models;
 
 namespace api.Controllers{
     
@@ -28,13 +29,9 @@ namespace api.Controllers{
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]dynamic value)
-        {
-            int answer=value.Answer;
-            int id=value.id; //sorunun ID'si
-            int true_answer = _rep.getAnswer(id);
-            return Ok(new {your_answer=answer,dogru_cevap=true_answer,id=id});
+        public IActionResult AddQuestion([FromBody]Question _question){
+            _rep.AddQuestion(_question);
+            return Ok();
         }
-
     }
 }

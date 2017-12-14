@@ -26,16 +26,32 @@ namespace api.Data{
         }
         public List<dynamic> GetQuestion(int id){
             using(IDbConnection _dbConnection = _connection){
-                string query=@"select q.questionText Text,a.answerText1 Ans1,a.answerText2 Ans2, a.answerText3 Ans3 ,a.trueAnswerNumber Answer  
-                               from question q inner join answer a on q.answerID=a.answerID where q.questionID=@id";
+                string query=@"select q.questionText Text, c.choise, c.text, c.correctAnswer Answer  
+                               from question q inner join choises c on q.questionID=c.questionID where q.questionID=@id";
                 var _questionList = _dbConnection.Query(query,new {id=id});
                 return _questionList.ToList();   
             }
         }
+        
+        public void AddQuestion(Question _question){
+            using(IDbConnection _dbConnection = _connection){
+                string query = @"insert into Question (
+                    [questionText],
+                    [catID],
+                    [solutionID]) values(
+                        @QuestionText,
+                        @CatID,
+                        @SolutionID)";
+                var affectedRows = _connection.Execute(query,_question);
+            }
+        } 
 
-        public int getAnswer(int id){
-            return GetQuestion(id).FirstOrDefault().Answer;
+        public List<dynamic> GetSolution(int id){
+            using(IDbConnection _dbConnection = _connection){
+                string query = "select s.solutionText from Solution s, Question q where q.questionID=@id and q.solutionID=s.solutionID";
+                var answer = _dbConnection.Query(query);
+                return answer.ToList();
+            }
         }
-
     }
 }
