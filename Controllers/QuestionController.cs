@@ -27,11 +27,5 @@ namespace api.Controllers{
             }
             return Ok(question);
         }
-
-        [HttpPost]
-        public IActionResult AddQuestion([FromBody]Question _question){
-            _rep.AddQuestion(_question);
-            return Ok();
-        }
     }
 }
