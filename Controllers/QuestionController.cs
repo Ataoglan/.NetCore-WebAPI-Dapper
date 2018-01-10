@@ -19,7 +19,7 @@ namespace api.Controllers{
             return Ok(_rep.GetAllQuestions());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}")] //Get question by QuestionID
         public IActionResult GetQuestion(int id){
             var question = _rep.GetQuestion(id);
             if(question.Equals(null)){ 
